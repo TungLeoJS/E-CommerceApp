@@ -6,12 +6,17 @@ import { Navbar } from '../components/Navbar';
 import { Newsletter } from '../components/Newsletter';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { mobile } from '../responsive';
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
+  ${mobile({
+      padding: '10px',
+      flexDirection: 'column'
+  })}
 `;
 
 const ImgContainer = styled.div`
@@ -22,11 +27,17 @@ const Image = styled.img`
   width: 100%;
   height: 90vh;
   object-fit: cover;
+  ${mobile({
+      height: '40%'
+  })}
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 0 50px;
+  ${mobile({
+      padding: '0'
+  })}
 `;
 
 const Title = styled.h1`
@@ -47,6 +58,9 @@ const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
+  ${mobile({
+      width: '100%'
+  })}
 `;
 
 const Filter = styled.div`
@@ -80,6 +94,9 @@ const AddContainer = styled.div`
   width: 50%;
   justify-content: space-between;
   align-items: center;
+  ${mobile({
+      width: '100%'
+  })}
 `;
 
 const AmountContainer = styled.div`

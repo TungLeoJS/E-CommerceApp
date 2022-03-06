@@ -31,8 +31,8 @@ const Right = styled.div`
   align-items: center;
   justify-content: flex-end;
   ${mobile({
-    justifyContent: 'flex-start',
     flex: 2,
+    marginRight: '10px'
   })}
 `;
 const Center = styled.div`

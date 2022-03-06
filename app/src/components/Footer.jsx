@@ -7,9 +7,13 @@ import PinterestIcon from '@material-ui/icons/Pinterest';
 import RoomIcon from '@material-ui/icons/Room';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
   display: flex;
+  ${mobile({
+    flexDirection: 'column'
+  })}
 `;
 
 const Left = styled.div`
@@ -20,11 +24,17 @@ const Left = styled.div`
 const Center = styled.div`
   flex: 1;
   padding: 20px; ;
+  ${mobile({
+    display: 'none'
+  })}
 `;
 
 const Right = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({
+    backgroundColor: 'lightgray'
+  })}
 `;
 
 const Logo = styled.h1``;
