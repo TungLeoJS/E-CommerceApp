@@ -1,0 +1,26 @@
+{
+  "name": "e-commerceapp",
+  "version": "1.0.0",
+  "description": "E-Commerce React/Node App",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn workspace app start",
+    "start-backend": "yarn workspace backend start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TungLeoJS/E-CommerceApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TungLeoJS/E-CommerceApp/issues"
+  },
+  "homepage": "https://github.com/TungLeoJS/E-CommerceApp#readme",
+  "workspaces": [
+    "app",
+    "backend"
+  ]
+}
