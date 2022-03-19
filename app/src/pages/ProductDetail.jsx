@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Announcement } from '../components/Announcement';
 import { Footer } from '../components/Footer';
@@ -7,6 +7,9 @@ import { Newsletter } from '../components/Newsletter';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { mobile } from '../responsive';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { publicRequest } from '../requestMethod';
 
 const Container = styled.div``;
 
@@ -14,13 +17,14 @@ const Wrapper = styled.div`
   padding: 50px;
   display: flex;
   ${mobile({
-      padding: '10px',
-      flexDirection: 'column'
+    padding: '10px',
+    flexDirection: 'column',
   })}
 `;
 
 const ImgContainer = styled.div`
   flex: 1;
+  background-color: #fafafa;
 `;
 
 const Image = styled.img`
@@ -28,15 +32,16 @@ const Image = styled.img`
   height: 90vh;
   object-fit: cover;
   ${mobile({
-      height: '40%'
+    height: '40%',
   })}
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 0 50px;
+  background-color: #fafafa;
   ${mobile({
-      padding: '0'
+    padding: '0',
   })}
 `;
 
@@ -59,7 +64,7 @@ const FilterContainer = styled.div`
   justify-content: space-between;
   margin: 20px 0;
   ${mobile({
-      width: '100%'
+    width: '100%',
   })}
 `;
 
@@ -95,7 +100,7 @@ const AddContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   ${mobile({
-      width: '100%'
+    width: '100%',
   })}
 `;
 
@@ -128,48 +133,61 @@ const Button = styled.button`
   }
 `;
 
-export const Product = () => {
+export const ProductDetail = () => {
+  const location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantity = (type) => {
+    type === "dec" ? setQuantity(quantity > 1 ? quantity - 1 : 1) : setQuantity(quantity + 1);
+  }
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get(`/products/find/${id}`);
+        if(res && res.data) {
+          setProduct(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [id]);
+
   return (
     <Container>
       <Navbar></Navbar>
       <Announcement></Announcement>
       <Wrapper>
         <ImgContainer>
-          <Image src='https://i.ibb.co/S6qMxwr/jean.jpg'></Image>
+          <Image src={product.img}></Image>
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>{product.title}</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+            {product.desc}
           </Desc>
-          <Price>$ 20</Price>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color='black'></FilterColor>
-              <FilterColor color='darkblue'></FilterColor>
-              <FilterColor color='gray'></FilterColor>
+              {product.color?.map((c) => <FilterColor color={c} key={c}/>)}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+                {product.size?.map((s) => <FilterSizeOption key={s}>{s}</FilterSizeOption>)}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <RemoveIcon />
-              <Amount>1</Amount>
-              <AddIcon>Add</AddIcon>
+              <RemoveIcon onClick={() => handleQuantity("dec")} style={{cursor: 'pointer'}}/>
+              <Amount>{quantity}</Amount>
+              <AddIcon onClick={() => handleQuantity("inc")} style={{cursor: 'pointer'}}>Add</AddIcon>
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>
