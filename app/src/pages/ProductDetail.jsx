@@ -7,9 +7,10 @@ import { Newsletter } from '../components/Newsletter';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { mobile } from '../responsive';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { publicRequest } from '../requestMethod';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/cartReducer';
 
 const Container = styled.div``;
 
@@ -138,9 +139,16 @@ export const ProductDetail = () => {
   const id = location.pathname.split('/')[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   const handleQuantity = (type) => {
     type === "dec" ? setQuantity(quantity > 1 ? quantity - 1 : 1) : setQuantity(quantity + 1);
+  }
+
+  const handleClick = () => {
+    dispatch(addProduct({...product, quantity, color, size}));
   }
 
   useEffect(() => {
@@ -174,11 +182,11 @@ export const ProductDetail = () => {
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              {product.color?.map((c) => <FilterColor color={c} key={c}/>)}
+              {product.color?.map((c) => <FilterColor color={c} key={c} onClick={(e) => setColor(c)}/>)}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => <FilterSizeOption key={s}>{s}</FilterSizeOption>)}
               </FilterSize>
             </Filter>
@@ -189,7 +197,7 @@ export const ProductDetail = () => {
               <Amount>{quantity}</Amount>
               <AddIcon onClick={() => handleQuantity("inc")} style={{cursor: 'pointer'}}>Add</AddIcon>
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
