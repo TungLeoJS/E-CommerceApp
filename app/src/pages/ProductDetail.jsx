@@ -10,7 +10,7 @@ import { mobile } from '../responsive';
 import { useLocation } from 'react-router-dom';
 import { publicRequest } from '../requestMethod';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../redux/cartReducer';
+import { addProduct } from '../redux/cartRedux';
 
 const Container = styled.div``;
 
