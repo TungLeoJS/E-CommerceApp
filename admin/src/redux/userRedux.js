@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const userSlice = createSlice({
   name: 'user',
@@ -19,6 +20,7 @@ const userSlice = createSlice({
     loginFailure: (state) => {
       state.isFetching = false;
       state.error = true;
+      toast.error('Login failed');
     },
   },
 });

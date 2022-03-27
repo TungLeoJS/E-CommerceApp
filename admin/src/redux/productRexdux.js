@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const productSlice = createSlice({
   name: 'product',
@@ -27,15 +28,18 @@ const productSlice = createSlice({
       state.error = false;
     },
     deleteProductSuccess: (state, action) => {
-      state.products = action.payload;
+      state.isFetching = false;
       state.products.splice(
-        state.products.findIndex((item) => item._id === action.payload.id),
+        state.products.findIndex(
+          (item) => item._id === action.payload.productId
+        ),
         1
       );
     },
     deleteProductFailure: (state) => {
       state.isFetching = false;
       state.error = true;
+      toast.error('Can not delete product');
     },
     //Update product
     updateProductStart: (state) => {
@@ -43,14 +47,16 @@ const productSlice = createSlice({
       state.error = false;
     },
     updateProductSuccess: (state, action) => {
-      state.products = action.payload;
-      state.product[
-        state.product.findIndex((x) => x._id === action.payload.productId)
-      ] = action.payload.product;
+      state.isFetching = false;
+      state.products[
+        state.products.findIndex((x) => x._id === action.payload.productId)
+      ] = { _id: action.payload.productId, ...action.payload.product };
+      toast.success('Product updated');
     },
     updateProductFailure: (state) => {
       state.isFetching = false;
       state.error = true;
+      toast.error('Something went wrong...');
     },
     //Update product
     addProductStart: (state) => {
@@ -58,12 +64,14 @@ const productSlice = createSlice({
       state.error = false;
     },
     addProductSuccess: (state, action) => {
-      state.products = action.payload;
-      state.product.push(action.payload);
+      state.isFetching = false;
+      state.products.push(action.payload);
+      toast.success('Add product successfully');
     },
     addProductFailure: (state) => {
       state.isFetching = false;
       state.error = true;
+      toast.error('Something went wrong...');
     },
   },
 });
