@@ -31,6 +31,7 @@ app.use('/api/carts', cartRoute);
 app.use('/api/orders', orderRoute);
 app.use('/api/checkout', checkoutRoute);
 
-app.listen(process.env.PORT || 5000, () => {
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
   console.log(`Server is running on ${process.env.PORT || 5000}!`);
 });

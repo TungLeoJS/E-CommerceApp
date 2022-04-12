@@ -2,7 +2,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import Topbar from './components/topbar/Topbar';
 import './App.css';
 import Home from './pages/home/Home';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import UserList from './pages/userList/UserList';
 import User from './pages/user/User';
 import NewUser from './pages/newUser/NewUser';
@@ -10,21 +10,27 @@ import ProductList from './pages/productList/ProductList';
 import Product from './pages/product/Product';
 import NewProduct from './pages/newProduct/NewProduct';
 import { Login } from './pages/login/Login';
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const admin = JSON.parse(
-    JSON.parse(localStorage.getItem('persist:root'))?.user
-  )?.currentUser?.isAdmin;
+  let admin = false;
+  const localStorageData = JSON.parse(localStorage.getItem('persist:root'));
+  if (localStorageData !== null && localStorageData.currentUser !== 'null') {
+    const user = JSON.parse(localStorageData?.user);
+    if (user !== null) {
+      admin = user?.currentUser?.isAdmin || false;
+    }
+  }
   return (
     <Router>
       <ToastContainer />
       <Switch>
         <Route path='/login'>
-          <Login />
+          {admin ? <Redirect to="/" ></Redirect> : <Login />}
         </Route>
-        {admin && (
+        {admin === false ? <Redirect to="/login"></Redirect>
+        : (
           <>
             <Topbar />
             <div className='container'>

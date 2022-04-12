@@ -171,6 +171,8 @@ const Button = styled.button`
 `;
 
 const KEY = 'pk_test_51KeL9nEI9dY11rlBpHAk8mYKpMVvf7NfzDIZKbEwlE7jPUsJYU3rLo3bC3pa33iywySy2OExgbMdgo6LIQjFrUTj00DWyXnlO4'
+// const BASE_URL = "http://localhost:5000/api/"
+const BASE_URL = "https://ecommerce-api-server-1.herokuapp.com/api/"
 
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -181,13 +183,12 @@ export const Cart = () => {
     const makeRequest = async () => {
       try {
         const res = await axios.post(
-          'http://localhost:5000/api/checkout/payment',
+          BASE_URL,
           {
             tokenId: stripeToken.id,
             amount: cart.totalPrice*100,
           }
         );
-        console.log(res.data);
         history('/success');
       } catch (err) {}
     };

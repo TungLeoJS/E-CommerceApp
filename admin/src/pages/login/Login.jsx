@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { login } from '../../redux/apiCalls';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 export const Login = () => {
@@ -9,16 +9,17 @@ export const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    login(dispatch, { username, password }).then((res) => {
-      if (res?.status === 200) {
-        history.push('/')
-      }
+    const res = await login(dispatch, { username, password });
+    if (res && res.status === 200) {
+      history('/');
+    } else {
       setUsername('');
       setPassword('');
-    })
+    }
   };
+
   return (
     <div
       style={{

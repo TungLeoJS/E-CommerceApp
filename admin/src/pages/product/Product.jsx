@@ -1,4 +1,4 @@
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import './product.css';
 import Chart from '../../components/chart/Chart';
 import { productData } from '../../dummyData';

@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 const KEY =
   'pk_test_51KeL9nEI9dY11rlBpHAk8mYKpMVvf7NfzDIZKbEwlE7jPUsJYU3rLo3bC3pa33iywySy2OExgbMdgo6LIQjFrUTj00DWyXnlO4';
+// const BASE_URL = "http://localhost:5000/api/";
+const BASE_URL = "https://ecommerce-api-server-1.herokuapp.com/api/"
 
 const Button = styled.button`
   width: 100%;
@@ -22,14 +24,13 @@ export const Pay = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await axios.post(
-          'http://localhost:5000/api/checkout/payment',
+        await axios.post(
+          BASE_URL,
           {
             tokenId: stripeToken.id,
             amount: 2000,
           }
         );
-        console.log(res.data);
         history('/success');
       } catch (err) {}
     };

@@ -26,20 +26,20 @@ export const categories = [
   {
     id: 1,
     img: 'https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    title: 'SHIRT STYLE!',
+    title: 'WOMEN',
     cat: 'women',
   },
   {
     id: 2,
-    img: 'https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    title: 'LOUNGEWEAR LOVE',
-    cat: 'coat'
+    img: 'https://i1.wp.com/www.addicfashion.com/wp-content/uploads/2018/10/Awesome-European-Men-Fashion-Style-To-Copy40.jpg',
+    title: 'MEN',
+    cat: 'men'
   },
   {
     id: 3,
-    img: 'https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-    title: 'LIGHT JACKETS',
-    cat: 'jeans'
+    img: 'https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/446551/item/vngoods_68_446551.jpg?width=1008&impolicy=quality_75',
+    title: 'KIDS',
+    cat: 'kids'
   },
 ];
 
